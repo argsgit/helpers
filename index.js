@@ -1,5 +1,12 @@
 function createElement(options) {
+  var el
+    , a
+    , i
 
+  if (options instanceof window.HTMLElement) {
+    el = options;
+  }
+  
   if (typeof options==='string') {
     options = {tagName : options}
   }
@@ -8,14 +15,11 @@ function createElement(options) {
     options = {...options, ...arguments[1]}
   }
   
-  var el
-    , a
-    , i
   if (!options.tagName) {
     el = document.createDocumentFragment()
   }
   else {
-    el = document.createElement(options.tagName)
+    el = el || document.createElement(options.tagName)
     if (Array.isArray(options.classList)) {
       options.className = ((options.className || '') + ' ' + options.classList.join(" ")).trimStart()
     }
