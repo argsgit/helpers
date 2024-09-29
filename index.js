@@ -1,25 +1,33 @@
 function createElement(options) {
-  var el
-    , a
-    , i
 
-  if (options instanceof window.HTMLElement) {
-    el = options;
-  }
-  
-  if (typeof options==='string') {
-    options = {tagName : options}
+  if (typeof options==='function') {
+    return createElement(options())
   }
 
   if (arguments.length===2) {
-    options = {...options, ...arguments[1]}
+    element = arguments[0]
+    options = arguments[1]
+    
+    if (element instanceof window.HTMLElement) {
+      options.el = element
+    }
+
+    if (typeof element==='string') {
+      options.tagName = element
+    }
+
+    return createElement(options)
   }
   
-  if (!el && !options.tagName) {
+  var el
+    , a
+    , i
+  
+  if (!options.el && !options.tagName) {
     el = document.createDocumentFragment()
   }
   else {
-    el = el || document.createElement(options.tagName)
+    el = options.el || document.createElement(options.tagName)
     if (Array.isArray(options.classList)) {
       options.className = ((options.className || '') + ' ' + options.classList.join(" ")).trimStart()
     }
