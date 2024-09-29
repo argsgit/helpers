@@ -1,4 +1,13 @@
 function createElement(options) {
+
+  if (typeof options==='string') {
+    options = {tagName : options}
+  }
+
+  if (arguments.length===2) {
+    options = {...options, ...arguments[1]}
+  }
+  
   var el
     , a
     , i
@@ -7,6 +16,9 @@ function createElement(options) {
   }
   else {
     el = document.createElement(options.tagName)
+    if (Array.isArray(options.classList)) {
+      options.className = ((options.className || '') + ' ' + options.classList.join(" ")).trimStart()
+    }
     if (options.className) {
       el.className = options.className
     }
