@@ -15,7 +15,7 @@ function createElement(options) {
     options = {...options, ...arguments[1]}
   }
   
-  if (!options.tagName) {
+  if (!el && !options.tagName) {
     el = document.createDocumentFragment()
   }
   else {
