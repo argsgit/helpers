@@ -6,7 +6,11 @@ function createElement(options) {
 
   if (arguments.length===2) {
     element = arguments[0]
-    options = arguments[1]
+    options = arguments[1] || {}
+
+    if (typeof options==='function') {
+      options = options()
+    }
     
     if (element instanceof window.HTMLElement) {
       options.el = element
